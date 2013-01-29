@@ -3,19 +3,21 @@
     <% if time_tracker.paused %>
         <%# A time tracker is paused, display the resume action %>
         <li>
-        <%= link_to_remote l(:resume_time_tracker).capitalize + ' #' + time_tracker.issue_id.to_s,
+        <%= link_to l(:resume_time_tracker).capitalize + ' #' + time_tracker.issue_id.to_s,
             :url => { :controller => '/time_trackers', :action => 'resume' },
             :html => { :class => 'icon icon-start' },
-            :update => 'time-tracker-menu'
+            :update => 'time-tracker-menu',
+	    :remote => true
         %>
         </li>
     <% else %>
         <%# A time tracker is not paused, display the suspend action %>
         <li>
-        <%= link_to_remote l(:suspend_time_tracker).capitalize + ' #' + time_tracker.issue_id.to_s,
+        <%= link_to l(:suspend_time_tracker).capitalize + ' #' + time_tracker.issue_id.to_s,
             :url => { :controller => '/time_trackers', :action => 'suspend' },
             :html => { :class => 'icon icon-pause' },
-            :update => 'time-tracker-menu'
+            :update => 'time-tracker-menu',
+	    :remote => true
         %>
         </li>
     <% end %>
@@ -29,10 +31,11 @@
     <%# No time tracker is running, but the user has the rights to track time on this issue %>
     <%# Display the start time tracker action %>
     <li>
-        <%= link_to_remote l(:start_time_tracker).capitalize + ' #' + @issue.id.to_s,
+        <%= link_to l(:start_time_tracker).capitalize + ' #' + @issue.id.to_s,
             :url => { :controller => '/time_trackers', :action => 'start', :issue_id => @issue.id },
             :html => { :class => 'icon icon-start' },
-            :update => 'time-tracker-menu'
+            :update => 'time-tracker-menu',
+	    :remote => true
         %>
     </li>
 <% end %>
