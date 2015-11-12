@@ -7,7 +7,7 @@ The span is populated with current time tracker state.
 (no AJAX request here, this allows to have the time tracker immediately visible)
 -->
 <%= javascript_tag "jQuery(document).ready(function($){
-    $('#time-tracker-menu').html(
+    $('#time-tracker-menu').replaceWith(
     '<span id=\"time-tracker-menu\">#{escape_javascript(((render :partial => 'time_trackers/embed_menu').delete "\n").strip)}</span>');
     });"
 %>
@@ -25,7 +25,7 @@ $.ajax({
 	success: function(data){
 		$('#time-tracker-menu').html(data);
 	},
-}); 
+});
 }
 <% end %>
 
@@ -37,9 +37,7 @@ Refresh rate is taken from settings. If settings is invalid, 60 secs is used. Th
 <% end %>
 <%= javascript_tag do %>
 $(function() {
-  $('[data-remote][data-replace]')
-    .data('type', 'html')
-    .live('ajax:success', function(event, data) {
+  $(document).on('ajax:success', '[data-remote][data-replace]', function(event, data) {
       var $this = $(this);
       $($this.data('replace')).html(data);
       $this.trigger('ajax:replaced');
